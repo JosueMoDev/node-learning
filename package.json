@@ -1,0 +1,35 @@
+{
+  "name": "learning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosueMoDev/node-learning.git"
+  },
+  "author": "Jonas Morales <jonasjosuemo2021@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JosueMoDev/node-learning/issues"
+  },
+  "homepage": "https://github.com/JosueMoDev/node-learning#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "dev:nodemon": "nodemon",
+    "build": "rimraf ./dist && tsc",
+    "start": "yarn run build && node dist/app.js"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^20.8.4",
+    "@types/yargs": "^17.0.28",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
