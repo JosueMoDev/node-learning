@@ -14,8 +14,8 @@
   "homepage": "https://github.com/JosueMoDev/node-learning#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
-    "dev:nodemon": "nodemon",
+    "dev": "ts-node src/app.ts",
+    "dev:nodemon": "nodemon -b 7",
     "build": "rimraf ./dist && tsc",
     "start": "yarn run build && node dist/app.js"
   },
