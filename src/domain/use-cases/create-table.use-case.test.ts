@@ -24,8 +24,5 @@ describe('CreateTableUseCase', () => {
         expect(rows).toContain(rows[0]);
         expect(rows).toContain(rows[options.limit - 1]);
         expect(rows.length).toBe(options.limit);
-
-        
-        
     });
 });
