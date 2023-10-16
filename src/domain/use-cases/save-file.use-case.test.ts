@@ -13,11 +13,15 @@ describe('SaveFile', () => {
 
 
     afterEach(() => {
-    const outputFolderExists = fs.existsSync('outputs');
-    const CustomOutputFolderExists = fs.existsSync(customOptions.fileDestination);
 
-    if (outputFolderExists) fs.rmSync('outputs', { recursive: true });
-    if (CustomOutputFolderExists) fs.rmSync(customOptions.fileDestination, { recursive: true });
+        const outputFolderExists = fs.existsSync('outputs');
+        const outputTestingFolderExists = fs.existsSync('test-destionation');
+
+        const CustomOutputFolderExists = fs.existsSync(customOptions.fileDestination);
+
+        if (outputFolderExists) fs.rmSync('outputs', { recursive: true });
+        if (CustomOutputFolderExists) fs.rmSync(customOptions.fileDestination, { recursive: true });
+        if (outputTestingFolderExists) fs.rmSync('test-destionation', { recursive: true });
 
     });
     
