@@ -1,6 +1,7 @@
 import { CreateTable } from '../domain/use-cases/create-table.use-case';
 import { SaveFile } from '../domain/use-cases/save-file.use-case';
 import { ServerApp } from './server-app';
+import fs from 'fs';
 
 const options = {
     base: 2,
@@ -13,7 +14,13 @@ const options = {
 
 describe('Server App', () => {
 
-    
+    afterEach(() => {
+
+        const outputTestingFolderExists = fs.existsSync(options.fileDestination);
+        if (outputTestingFolderExists) fs.rmSync(options.fileDestination, { recursive: true });
+
+    });
+
     test('Should create ServerApp instance', () => {
         const serverApp = new ServerApp();
         expect(serverApp).toBeInstanceOf(ServerApp);
@@ -45,5 +52,32 @@ describe('Server App', () => {
         });
     
     
+    });
+
+    test('Should run with custom values mocked', () => {
+
+        const logMock = jest.fn();
+        const logErrorMock = jest.fn();
+        const createMock = jest.fn().mockReturnValue(` Multiplication table of ${options.base}`);
+        const saveFileMock = jest.fn().mockReturnValue(true);
+
+        console.log = logMock;
+        console.error = logErrorMock;
+        CreateTable.prototype.execute = createMock;
+        SaveFile.prototype.execute = saveFileMock;
+
+        ServerApp.run(options);
+
+
+        expect(logMock).toHaveBeenCalledWith('Server running...');
+        expect(createMock).toHaveBeenCalledWith({ base: options.base, limit: options.limit });
+        expect(saveFileMock).toHaveBeenCalledWith({
+            fileContent: expect.any(String),
+            fileDestination: options.fileDestination,
+            fileName: options.fileName
+        });
+
+        expect(logMock).toHaveBeenCalledWith('File created!');
+        expect(logErrorMock).not.toBeCalledWith();
     });
 });
