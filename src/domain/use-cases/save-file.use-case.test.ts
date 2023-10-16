@@ -2,11 +2,26 @@ import fs from 'fs';
 import { SaveFile } from './save-file.use-case';
 
 describe('SaveFile', () => {
+
+
     const customOptions = {
         fileContent: '',
         fileDestination: 'outputs-test',
         fileName: 'table del 7'
     }
+
+
+
+    afterEach(() => {
+    const outputFolderExists = fs.existsSync('outputs');
+    const CustomOutputFolderExists = fs.existsSync(customOptions.fileDestination);
+
+    if (outputFolderExists) fs.rmSync('outputs', { recursive: true });
+    if (CustomOutputFolderExists) fs.rmSync(customOptions.fileDestination, { recursive: true });
+
+    });
+    
+    
     test('Should save a file with default values', () => {
         const saveFile = new SaveFile();
         const options = {
@@ -39,13 +54,34 @@ describe('SaveFile', () => {
 
     });
 
-    afterEach(() => {
-        const outputFolderExists = fs.existsSync('outputs');
-        const CustomOutputFolderExists = fs.existsSync(customOptions.fileDestination);
 
-        if (outputFolderExists) fs.rmSync('outputs', { recursive: true });
-        if (CustomOutputFolderExists) fs.rmSync(customOptions.fileDestination, { recursive: true });
 
+
+
+    test('Should return false if directory could not be created', () => {
+        const saveFile = new SaveFile();
+        const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation(
+            () => {
+                throw new Error('This is a custom error from testing');
+            }
+        );
+
+        const result = saveFile.execute(customOptions);
+        expect(result).toBeFalsy;
+        mkdirSpy.mockRestore();
+    });
+
+    test('Should return false if file could not be created', () => {
+        const saveFile = new SaveFile();
+        const writeFileSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(
+            () => {
+                throw new Error('This is a custom writting error message');
+            }
+        );
+
+        const result = saveFile.execute(customOptions);
+        expect(result).toBeTruthy;
+        writeFileSpy.mockRestore();
     });
 
 
