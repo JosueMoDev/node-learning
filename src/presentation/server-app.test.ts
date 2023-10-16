@@ -1,6 +1,6 @@
-import { CreateTable } from './domain/use-cases/create-table.use-case';
-import { SaveFile } from './domain/use-cases/save-file.use-case';
-import { ServerApp } from './presentation/serve-app';
+import { CreateTable } from '../domain/use-cases/create-table.use-case';
+import { SaveFile } from '../domain/use-cases/save-file.use-case';
+import { ServerApp } from './server-app';
 
 const options = {
     base: 2,
