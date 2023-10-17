@@ -3,11 +3,25 @@ import { LogRepositoryImpl } from "../Infraestructure/repositories/log.repositor
 import { envs } from "../config/plugins/envs.plugin";
 import { CheckService } from "../domain/use-cases/checks/checks-service";
 import { CronService } from "./cron/cron-service";
+import { EmailService } from "./email/email-service";
 
 const fileSystemLogRepository = new LogRepositoryImpl(new FileSystemDatasource());
 export class Server {
     public static start() {
         console.log(`server started on port ${envs.PORT}...`);
+
+        const emailService = new EmailService();
+        // emailService.sendEmail({
+        //     to: 'josuemodev@gmail.com',
+        //     subject: 'System logs',
+        //     htmlBody: `
+
+        //         <h3> System Logs </h3>
+        //         <p>jalkjsalksjalksjalskajslakjsalksjalskjalskajslkajl</p>
+            
+        //     `
+        // })
+
         CronService.createJob(
             '*/5 * * * * *',
             () => {
