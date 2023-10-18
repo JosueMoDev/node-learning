@@ -10,7 +10,7 @@ export class Server {
     public static start() {
         console.log(`server started on port ${envs.PORT}...`);
 
-        const emailService = new EmailService();
+        const emailService = new EmailService(fileSystemLogRepository);
         // emailService.sendEmail({
         //     to: 'josuemodev@gmail.com',
         //     subject: 'System logs',
