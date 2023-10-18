@@ -22,6 +22,8 @@ export class Server {
         //     `
         // })
 
+        // emailService.sendEmailWithFileSystemLogs('josuemodev@gmail.com');
+
         CronService.createJob(
             '*/5 * * * * *',
             () => {

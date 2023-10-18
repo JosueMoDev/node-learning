@@ -7,8 +7,8 @@ export class FileSystemDatasource implements LogDataSource{
 
     private readonly logPath = 'logs/';
     private readonly allLogsPath = 'logs/logs-all.log'
-    private readonly mediumLogsPath = 'logs/log-medium.log';
-    private readonly highLogsPath = 'logs/log-high.log';
+    private readonly mediumLogsPath = 'logs/logs-medium.log';
+    private readonly highLogsPath = 'logs/logs-high.log';
 
     constructor() { 
         this.createLogsFiles();
