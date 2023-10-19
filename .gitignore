@@ -7,13 +7,16 @@ lerna-debug.log*
 logs/
 *.seed
 
-coverage
+coverage/
 
 .env
 .env.development
 .env.production
+.env.test
 
 dist/
 node_modules/
 mongo/
 postgres/
+mongo-test/
+postgres-test/
