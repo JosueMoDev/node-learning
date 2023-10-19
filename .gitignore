@@ -16,3 +16,4 @@ coverage
 dist/
 node_modules/
 mongo/
+postgres/
