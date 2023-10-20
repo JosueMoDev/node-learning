@@ -17,8 +17,7 @@ export class MongoDatabase {
             console.log('Database up')
             
         } catch (error) {
-            console.log(error);
-            throw error;
+            throw new Error("MongooseError");
         }
 
     }
