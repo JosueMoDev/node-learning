@@ -27,7 +27,7 @@ export class PostgresLogDataSource extends LogDataSource {
 
         console.log(newLog);
     }
-    async getLog(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
+    async getLogs(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
         const level = severityLevelEnum[serverityLevel];
 
         const logs = await prismaClient.logModel.findMany({

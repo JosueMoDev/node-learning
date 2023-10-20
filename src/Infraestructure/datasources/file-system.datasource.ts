@@ -36,7 +36,7 @@ export class FileSystemDatasource implements LogDataSource{
 
         const content = fs.readFileSync(path, 'utf-8');
         if (content === '') return [];
-        return content.split('\n').map(LogEntity.fronJson);
+        return content.split('\n').map(LogEntity.fromJson);
 
     }
 
@@ -53,7 +53,7 @@ export class FileSystemDatasource implements LogDataSource{
         if (log.level === LogSeverityLevel.high) return fs.appendFileSync(this.highLogsPath, logAsJson);
         
     }
-    async getLog(serveriyLevel: LogSeverityLevel): Promise<LogEntity[]> {
+    async getLogs(serveriyLevel: LogSeverityLevel): Promise<LogEntity[]> {
         switch (serveriyLevel) {
             case LogSeverityLevel.low:
                 return this.getLogsFromFile(this.allLogsPath);

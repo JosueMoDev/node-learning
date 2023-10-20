@@ -8,7 +8,7 @@ export class MongoLogDatasource implements LogDataSource {
         const newLog = await LogModel.create(log);
         console.log('Mongo Log Created: ', newLog.id)
     }
-    async getLog(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
+    async getLogs(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
         const logsBySeverityLevel = await LogModel.find({ level: serverityLevel });
         return logsBySeverityLevel.map(LogEntity.fromObject);
     }
