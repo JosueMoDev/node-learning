@@ -29,9 +29,9 @@ export class LogEntity {
         this.origin = origin
     }
 
-    static fronJson = (json: string): LogEntity => { 
+    static fromJson = (json: string): LogEntity => { 
         
-        const { message, level, createdAt } = JSON.parse(json);
+        const { message, level, createdAt, origin } = JSON.parse(json);
         if (!message) throw new Error(`You Must Pride a message`);
         if (!level) throw new Error(`You Must Pride a severity level`);
 
@@ -39,9 +39,8 @@ export class LogEntity {
             message,
             level,
             origin,
-            createdAt
+            createdAt: new Date(createdAt)
         });
-        log.createdAt = new Date(createdAt);
 
         return log;
         
