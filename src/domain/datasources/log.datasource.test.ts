@@ -11,8 +11,8 @@ describe('log.datasource.ts LogDataSource', () => {
 
     class MockLogDataSource implements LogDataSource {
 
-        async saveLog(log: LogEntity): Promise<void> {
-            return;
+        async saveLog(log: LogEntity): Promise<boolean> {
+            return true;
         }
         async getLogs(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
             return [newLog];
