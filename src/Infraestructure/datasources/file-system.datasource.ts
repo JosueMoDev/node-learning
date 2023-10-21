@@ -40,17 +40,19 @@ export class FileSystemDatasource implements LogDataSource{
 
     }
 
-    async saveLog(log: LogEntity): Promise<void> {
+    async saveLog(log: LogEntity): Promise<boolean> {
 
         const logAsJson = `${JSON.stringify(log)}\n`;
 
         fs.appendFileSync(this.allLogsPath, logAsJson);
 
-        if (log.level === LogSeverityLevel.low) return;
+        if (log.level === LogSeverityLevel.low) return true;
 
-        if (log.level === LogSeverityLevel.medium) return fs.appendFileSync(this.mediumLogsPath, logAsJson);
+        if (log.level === LogSeverityLevel.medium) fs.appendFileSync(this.mediumLogsPath, logAsJson);
 
-        if (log.level === LogSeverityLevel.high) return fs.appendFileSync(this.highLogsPath, logAsJson);
+        if (log.level === LogSeverityLevel.high)  fs.appendFileSync(this.highLogsPath, logAsJson);
+
+        return true
         
     }
     async getLogs(serveriyLevel: LogSeverityLevel): Promise<LogEntity[]> {

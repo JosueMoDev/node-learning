@@ -61,7 +61,7 @@ export class Server {
                     [postgresLogRepository, mongoLogRepository, fileSystemLogRepository],
                     () => console.log('service up'),
                     () => console.log('Error on service'),
-                ).execute("http://localhost:3000");
+                ).execute("https://google.com");
             }
         )
     }

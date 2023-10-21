@@ -12,7 +12,7 @@ const severityLevelEnum = {
 
 export class PostgresLogDataSource extends LogDataSource {
 
-    async saveLog(log: LogEntity): Promise<void> {
+    async saveLog(log: LogEntity): Promise<boolean> {
         
         const { message, origin } = log;
         const level = severityLevelEnum[log.level];
@@ -25,7 +25,7 @@ export class PostgresLogDataSource extends LogDataSource {
             }
         });
 
-        console.log(newLog);
+        return newLog ? true : false;
     }
     async getLogs(serverityLevel: LogSeverityLevel): Promise<LogEntity[]> {
         const level = severityLevelEnum[serverityLevel];
