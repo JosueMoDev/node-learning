@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer'
 import { envs } from '../../config/plugins/envs.plugin';
 import { LogEntity, LogSeverityLevel } from '../../domain/entities/log.entity';
 
-interface SendMailOptions {
+export interface SendMailOptions {
     to: string | string[],
     subject: string,
     htmlBody: string,
@@ -63,10 +63,7 @@ export class EmailService {
     async sendEmailWithFileSystemLogs(to: string | string[]){
    
         const subject = 'System logs';
-        const htmlBody = `
-            <h3> System Logs </h3>
-            <p>jalkjsalksjalksjalskajslakjsalksjalskjalskajslkajl</p>
-        `;
+        const htmlBody ='<h1>Testing</h1>';
         const attachments: Attachments[] = [
           { filename: "logs-all.log", path: "./logs/logs-all.log" },
           { filename: "logs-high.log", path: "./logs/logs-high.log" },
