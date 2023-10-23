@@ -1,0 +1,22 @@
+### Node ###
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+logs/
+*.seed
+
+coverage/
+
+.env
+.env.development
+.env.production
+.env.test
+
+dist/
+node_modules/
+mongo/
+postgres/
+mongo-test/
+postgres-test/
