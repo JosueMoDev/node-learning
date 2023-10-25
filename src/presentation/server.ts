@@ -27,17 +27,20 @@ export class Server {
   async start() {
     
 
+    
     //* Middlewares
+    this.app.use( express.json() ); // raw
+    this.app.use( express.urlencoded({ extended: true }) ); // x-www-form-urlencoded
 
     //* Public Folder
     this.app.use( express.static( this.publicPath ) );
 
-    // * Routes
+
+    //* Routes
+    this.app.use( this.routes );
 
 
-    this.app.use(this.routes);
-
-
+    //* SPA
     this.app.get('*', (req, res) => {
       const indexPath = path.join( __dirname + `../../../${ this.publicPath }/index.html` );
       res.sendFile(indexPath);
