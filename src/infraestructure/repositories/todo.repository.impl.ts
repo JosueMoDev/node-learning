@@ -1,22 +1,26 @@
 import { CreateTodoDto, TodoDaSource, TodoEntity, TodoRepository, UpdateTodoDto } from "../../domain";
 
-export class TodoRepositoryImpl extends TodoRepository {
+export class TodoRepositoryImpl implements TodoRepository {
 
+
+    constructor(
+        private readonly datasource: TodoDaSource
+    ){}
 
     create(todoDto: CreateTodoDto): Promise<TodoEntity> {
-        throw new Error("Method not implemented.");
+        return this.datasource.create(todoDto);
     }
     findById(id: number): Promise<TodoEntity | undefined> {
-        throw new Error("Method not implemented.");
+        return this.datasource.findById(id);
     }
     getAll(): Promise<TodoEntity[]> {
-        throw new Error("Method not implemented.");
+        return this.datasource.getAll();
     }
-    updateById(updateDto: UpdateTodoDto): Promise<TodoEntity> {
-        throw new Error("Method not implemented.");
+    updateById(updateDto: UpdateTodoDto): Promise<TodoEntity| undefined> {
+        return this.datasource.updateById(updateDto);
     }
     deleteById(id: number): Promise<TodoEntity> {
-        throw new Error("Method not implemented.");
+        return this.datasource.deleteById(id);
     }
 
 }
