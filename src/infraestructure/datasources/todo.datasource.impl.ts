@@ -1,55 +1,50 @@
 import { prisma } from "../../data";
-import { TodoDaSource, CreateTodoDto, UpdateTodoDto, TodoEntity } from "../../domain";
+import { TodoDataSource, CreateTodoDto, UpdateTodoDto, TodoEntity, CustomError } from "../../domain";
 
-export class TodoDatasourceImpl implements TodoDaSource {
 
-    async create(createTodoDto: CreateTodoDto): Promise<TodoEntity> {
-        const todo = await prisma.todo.create({
-            data: createTodoDto!
-        });
 
-        if (!todo) throw `We couldnt save todo`;
+export class TodoDatasourceImpl implements TodoDataSource {
 
-        return TodoEntity.fromObject(todo);
+  async create( createTodoDto: CreateTodoDto ): Promise<TodoEntity> {
+    const todo = await prisma.todo.create({
+      data: createTodoDto!
+    });
 
-    }
+    return TodoEntity.fromObject( todo );
+  }
 
-    async findById(id: number): Promise<TodoEntity | undefined> {
+  async getAll(): Promise<TodoEntity[]> {
+    const todos = await prisma.todo.findMany();
+    return todos.map( todo => TodoEntity.fromObject(todo) );
+  }
 
-        if (isNaN(id)) throw 'ID argument is not a number';
+  async findById( id: number ): Promise<TodoEntity> {
+    const todo = await prisma.todo.findFirst({
+      where: { id }
+    });
 
-        const todo = await prisma.todo.findFirst({ where: { id } });
+    if ( !todo ) throw new CustomError(`Todo with id ${ id } not found`, 404);
+    return TodoEntity.fromObject(todo);
+  }
 
-        if (!todo) throw `Todo with id ${id} not found`;
+  async updateById( updateTodoDto: UpdateTodoDto ): Promise<TodoEntity> {
+    await this.findById( updateTodoDto.id );
+    
+    const updatedTodo = await prisma.todo.update({
+      where: { id: updateTodoDto.id },
+      data: updateTodoDto!.values
+    });
 
-        return TodoEntity.fromObject(todo);
-    }
+    return TodoEntity.fromObject(updatedTodo);
+  }
 
-    async getAll(): Promise<TodoEntity[]> {
-        const todos = await prisma.todo.findMany();
-        return todos.map(TodoEntity.fromObject);
-    }
+  async deleteById( id: number ): Promise<TodoEntity> {
+    await this.findById( id );
+    const deleted = await prisma.todo.delete({
+      where: { id }
+    });
 
-    async updateById(updateDto: UpdateTodoDto): Promise<TodoEntity | undefined> {
-        const todo = await this.findById(updateDto.id);
-        if ( !todo ) throw `we couldnt find any todo with id ${updateDto.id}`;
-
-        const updatedTodo = await prisma.todo.update({
-        where: { id: updateDto.id },
-        data: updateDto!.values
-        });
-
-        return TodoEntity.fromObject(updatedTodo)
-    }
-
-    async deleteById(id: number): Promise<TodoEntity> {
-        await this.findById(id);
-        const deleted = await prisma.todo.delete({
-            where: { id }
-        });
-
-        return TodoEntity.fromObject(deleted);
-
-    }
+    return TodoEntity.fromObject( deleted );
+  }
 
 }
