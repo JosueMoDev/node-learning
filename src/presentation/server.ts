@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import compression from 'compression';
 import path from 'path';
 
 interface Options {
@@ -10,10 +11,11 @@ interface Options {
 
 export class Server {
 
-  private app = express();
+  public app = express();
   private readonly port: number;
   private readonly publicPath: string;
   private readonly routes: Router;
+  private serverListener?: any;
 
   constructor(options: Options) {
     const { port, routes, public_path = 'public' } = options;
@@ -31,7 +33,7 @@ export class Server {
     //* Middlewares
     this.app.use( express.json() ); // raw
     this.app.use( express.urlencoded({ extended: true }) ); // x-www-form-urlencoded
-
+    this.app.use( compression() )
     //* Public Folder
     this.app.use( express.static( this.publicPath ) );
 
@@ -51,6 +53,13 @@ export class Server {
       console.log(`Server running on port ${ this.port }`);
     });
 
+    
+
   }
+
+  public close() {
+    this.serverListener?.close();
+  }
+
 
 }
