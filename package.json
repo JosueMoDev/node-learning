@@ -7,9 +7,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
-    "build": "rimraf ./dist && tsc",
-    "start": "yarn run build && node dist/app.js",
-    "test": "jest"
+    "build": "rimraf ./dist && tsc && npm run prisma:migrate:prod",
+    "start": "node dist/app.js",
+    "prisma:migrate:prod": "prisma migrate deploy",
+    "prisma:migrate:test": "dotenv -e .env -- npx prisma migrate deploy",
+    "test": "yarn run prisma:migrate:test && jest",
+    "test:watch": "yarn run prisma:migrate:test && jest --watchAll --coverage",
+    "test:coverage": "yarn run prisma:migrate:test && jest --coverage"
   },
   "devDependencies": {
     "@types/compression": "^1.7.3",
