@@ -16,7 +16,7 @@ coverage/
 .DS_Store
 dist/
 node_modules/
-mongo/
+/mongo
 postgres/
 mongo-test/
 postgres-test/
