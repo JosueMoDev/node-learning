@@ -39,7 +39,6 @@ export class AuthController {
     const [error, loginUserDto] = LoginUserDto.create(req.body);
     if ( error ) return res.status(400).json({error})
 
-
     this.authService.loginUser(loginUserDto!)
       .then( (user) => res.json(user) )
       .catch( error => this.handleError(error, res) );

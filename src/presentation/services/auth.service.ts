@@ -3,9 +3,6 @@ import { UserModel } from '../../data';
 import { CustomError, LoginUserDto, RegisterUserDto, UserEntity } from '../../domain';
 import { EmailService } from './email.service';
 
-
-
-
 export class AuthService {
 
   // DI
@@ -50,6 +47,7 @@ export class AuthService {
 
   public async loginUser( loginUserDto: LoginUserDto ) {
 
+    console.log(loginUserDto)
     const user = await UserModel.findOne({ email: loginUserDto.email });
     if (!user) throw CustomError.badRequest('Email not exist');
 
@@ -61,7 +59,7 @@ export class AuthService {
     
     const token = await JwtAdapter.generateToken({ id: user.id });
     if ( !token ) throw CustomError.internalServer('Error while creating JWT');
-
+    console.log(user)
     return {
       user: userEntity,
       token: token,

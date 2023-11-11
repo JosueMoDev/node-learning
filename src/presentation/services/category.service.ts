@@ -1,10 +1,6 @@
 import { CategoryModel } from '../../data';
 import { CreateCategoryDto, CustomError, PaginationDto, UserEntity } from '../../domain';
 
-
-
-
-
 export class CategoryService {
 
   // DI

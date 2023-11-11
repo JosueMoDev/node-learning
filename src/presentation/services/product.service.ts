@@ -1,6 +1,6 @@
+
 import { ProductModel } from '../../data';
 import { CreateProductDto, CustomError, PaginationDto } from '../../domain';
-
 
 
 export class ProductService {
